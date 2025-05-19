@@ -1,0 +1,316 @@
+ <!-- listar_usuarios.html -->
+  {% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Usuarios del Sistema - Super Market</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap y fuentes -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a2e0e6d3f2.js" crossorigin="anonymous"></script>
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: url("{% static 'pqrs/img/fondo_login.jpg' %}") no-repeat center center;
+      background-size: cover;
+    }
+
+    .top-bar {
+      background-color: black;
+      color: white;
+      padding: 8px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .top-bar a {
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
+      font-size: 0.95rem;
+    }
+
+    .header {
+      background-color: white;
+      padding: 20px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .header h1 {
+      font-weight: 700;
+      color: #2c3e50;
+      margin: 0;
+    }
+
+    nav {
+      background-color: #f1f1f1;
+      padding: 12px 40px;
+      display: flex;
+      gap: 25px;
+    }
+
+    nav a {
+      color: #333;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .acceso-usuarios {
+      max-width: 500px;
+      margin: 40px auto;
+      background: white;
+      border-radius: 0px;
+      padding: 40px 30px;
+      text-align: center;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .acceso-usuarios h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      border-bottom: 2px solid #444;
+      display: inline-block;
+      margin-bottom: 40px;
+    }
+
+    .usuario-opcion {
+      display: inline-block;
+      margin: 20px 40px;
+      text-align: center;
+    }
+
+    .usuario-opcion img {
+      width: 150px;
+      margin-bottom: 20px;
+    }
+
+    .usuario-opcion a {
+      display: block;
+      padding: 10px 20px;
+      border-radius: 5px;
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+
+    .btn-gestores {
+      background-color: #2a9f8d;
+      color: #333;
+    }
+
+    .btn-clientes {
+      background-color: #47a794;
+    }
+
+    .main-container {
+      background: white;
+      margin: 40px auto;
+      border-radius: 0px;
+      padding: 30px;
+      max-width: 1200px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .section-title {
+      margin-top: 2.5rem;
+      font-size: 1.4rem;
+      font-weight: 600;
+      border-bottom: 0px solid #dee2e6;
+      padding-bottom: 0.5rem;
+      color: #198754;
+    }
+
+    .page-title {
+      font-weight: 600;
+      font-size: 1.8rem;
+    }
+
+    .table th, .table td {
+      vertical-align: middle;
+    }
+
+    footer h5 {
+      font-weight: 600;
+    }
+
+    .btn-sm {
+      font-size: 0.85rem;
+    }
+    .btn-eliminar {
+  background-color: #d85d69 !important; /* rojo fuerte */
+  color: white;
+  border: none;
+}
+
+.btn-desactivar {
+  background-color: #eedb85 !important; /* naranja */
+  color: white;
+  border: none;
+}
+
+  </style>
+</head>
+<body>
+
+<!-- Barra superior -->
+<div class="top-bar">
+  <div>Página web</div>
+  <div class="d-flex align-items-center gap-4">
+    <a href="#">Acerca de</a>
+    <a href="#">Contacto</a>
+    <a href="#">Asistencia</a>
+    <span>Llama +57-300 177 5294</span>
+  </div>
+</div>
+
+<!-- Encabezado -->
+<header class="header">
+  <h1><a href="{% url 'index' %}" class="text-decoration-none text-dark">Super Market</a></h1>
+  <div class="d-flex align-items-center">
+    <input type="text" placeholder="Buscar..." class="form-control me-2" style="border-radius: 20px; max-width: 300px;">
+    <button class="btn btn-success" style="border-radius: 10px;">Buscar</button>
+  </div>
+</header>
+
+<!-- Menú -->
+<nav>
+  <a href="{% url 'index' %}">Volver al Panel administrador</a>
+  <a href="{% url 'crear_gestor' %}">Crear Nuevo gestor</a>
+  <a href="{% url 'logout_admin' %}">Cerrar Sesión</a>
+</nav>
+
+<!-- Acceso visual -->
+<div class="acceso-usuarios">
+  <h2>Usuarios del sistema</h2>
+  <div class="d-flex justify-content-center flex-wrap mt-4">
+    <div class="usuario-opcion">
+      <img src="{% static 'pqrs/img/usuario.png' %}" alt="Gestores">
+      <a href="#gestores" class="btn-gestores">Gestores</a>
+    </div>
+    <div class="usuario-opcion">
+      <img src="{% static 'pqrs/img/usuario.png' %}" alt="Clientes">
+      <a href="#clientes" class="btn-clientes">Clientes</a>
+    </div>
+  </div>
+</div>
+
+<!-- Tablas de gestión -->
+<div class="main-container">
+
+  <!-- Gestores -->
+  <div id="gestores" class="section-title">Gestores</div>
+  <div class="table-responsive">
+    <table class="table table-hover table-bordered align-middle">
+      <thead class="table-light">
+        <tr>
+          <th>Usuario</th>
+          <th class="text-center">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for g in gestores %}
+        <tr>
+          <td>{{ g.username }}</td>
+          <td class="text-center">
+            <a href="{% url 'eliminar_gestor' g.id %}" class="btn btn-sm btn-eliminar">Eliminar</a>
+          </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="2" class="text-center text-muted">No hay gestores registrados.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Clientes -->
+  <div id="clientes" class="section-title">Clientes</div>
+  <div class="table-responsive">
+    <table class="table table-hover table-bordered align-middle">
+      <thead class="table-light">
+        <tr>
+          <th>Nombre</th>
+          <th>Correo</th>
+          <th>Activo</th>
+          <th class="text-center">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for c in clientes %}
+        <tr>
+          <td>{{ c.nombre }}</td>
+          <td>{{ c.correo }}</td>
+          <td>
+            {% if c.activo %}
+              <span class="badge bg-success">Sí</span>
+            {% else %}
+              <span class="badge bg-secondary">No</span>
+            {% endif %}
+          </td>
+          <td class="text-center">
+            {% if c.activo %}
+              <a href="{% url 'desactivar_cliente' c.id %}" class="btn btn-sm btn-desactivar">Desactivar</a>
+
+            {% else %}
+              <span class="text-muted">Inactivo</span>
+            {% endif %}
+          </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="4" class="text-center text-muted">No hay clientes registrados.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-white py-5 mt-5 border-top">
+  <div class="container">
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+      <div>
+        <h5 class="fw-bold">Ubicación de tienda</h5>
+        <p class="mb-1">Av. Fray A. Alcalde 10</p>
+        <p class="mb-1">Bogotá D.C., Colombia</p>
+        <p class="mb-1">info@misitio.com</p>
+        <p class="mb-2">+57 3001775294</p>
+        <div class="d-flex gap-3">
+          <a href="#"><i class="fab fa-facebook fa-lg text-dark"></i></a>
+          <a href="#"><i class="fab fa-instagram fa-lg text-dark"></i></a>
+          <a href="#"><i class="fab fa-twitter fa-lg text-dark"></i></a>
+          <a href="#"><i class="fab fa-youtube fa-lg text-dark"></i></a>
+        </div>
+      </div>
+
+      <div>
+        <h5 class="fw-bold">Atención al cliente</h5>
+        <ul class="list-unstyled">
+          <li><a href="#" class="text-decoration-none text-dark">Contáctanos</a></li>
+          <li><a href="#" class="text-decoration-none text-dark">Asistencia</a></li>
+          <li><a href="#" class="text-decoration-none text-dark">Acerca de</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h5 class="fw-bold">Política</h5>
+        <ul class="list-unstyled">
+          <li><a href="#" class="text-decoration-none text-dark">Términos y condiciones</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

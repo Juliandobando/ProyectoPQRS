@@ -1,0 +1,168 @@
+/* Reset básico */
+* {
+  box-sizing: border-box;
+}
+
+/* Body con fondo suave */
+body {
+  background: #f9fafb;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #2c3e50;
+}
+
+/* Contenedor central */
+.container {
+  max-width: 900px;
+  margin: 50px auto;
+  background: #fff;
+  padding: 40px 30px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+}
+
+/* Título */
+.titulo-pqrs {
+  font-size: 2.6rem;
+  font-weight: 700;
+  text-align: center;
+  color: #27ae60;
+  margin-bottom: 35px;
+}
+
+/* Formulario: layout en grid para que quede ordenado */
+.form-filtro {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr auto;
+  gap: 20px 25px;
+  align-items: flex-end;
+  margin-bottom: 30px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #34495e;
+}
+
+.input-text,
+.select {
+  padding: 10px 14px;
+  border: 2px solid #d1d8e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+  outline: none;
+}
+
+.input-text::placeholder {
+  color: #a5b1c2;
+}
+
+.input-text:focus,
+.select:focus {
+  border-color: #27ae60;
+  box-shadow: 0 0 5px rgba(39, 174, 96, 0.4);
+}
+
+/* Botón */
+.btn {
+  padding: 12px 30px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border-radius: 40px;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  background: #27ae60;
+  box-shadow: 0 5px 15px rgba(39, 174, 96, 0.4);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #219150;
+  box-shadow: 0 7px 20px rgba(33, 145, 80, 0.6);
+}
+
+/* Mensaje de error */
+.mensaje-error {
+  color: #e74c3c;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+/* Tabla */
+.tabla-radicados {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+  font-size: 0.95rem;
+}
+
+.tabla-radicados thead tr {
+  background: #27ae60;
+  color: #fff;
+  text-align: left;
+  border-radius: 12px;
+}
+
+.tabla-radicados th,
+.tabla-radicados td {
+  padding: 12px 15px;
+}
+
+/* Estilo filas */
+.tabla-radicados tbody tr {
+  background: #ecf0f1;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.05);
+  border-radius: 12px;
+  transition: background-color 0.3s ease;
+}
+
+.tabla-radicados tbody tr:hover {
+  background-color: #d1e7d3;
+}
+
+/* Links en tabla */
+.link-radicado,
+.link-pdf {
+  color: #27ae60;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.link-radicado:hover,
+.link-pdf:hover {
+  color: #1e8449;
+  text-decoration: underline;
+}
+
+/* Texto sin archivo */
+.sin-archivo {
+  color: #7f8c8d;
+  font-style: italic;
+}
+
+/* Responsive: apila el form en móviles */
+@media (max-width: 720px) {
+  .form-filtro {
+    grid-template-columns: 1fr;
+  }
+
+  .btn {
+    width: 100%;
+    padding: 14px 0;
+  }
+
+  .tabla-radicados thead tr {
+    font-size: 0.9rem;
+  }
+}

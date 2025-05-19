@@ -1,0 +1,143 @@
+<!-- pqrs/templates/pqrs/detalle_pqrs.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Detalle PQRS - {{ pqrs.numero_radicado }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+    <style>
+        body {
+            background: #f5f9f7;
+            font-family: 'Poppins', sans-serif;
+            color: #2f3e46;
+            padding: 3rem 1rem;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 700px;
+            background: white;
+            margin: 0 auto;
+            border-radius: 1rem;
+            padding: 2.5rem 3rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            font-weight: 700;
+            color: #2e7d32;
+            margin-bottom: 2rem;
+            text-align: center;
+            letter-spacing: 0.04em;
+        }
+
+        .detail-row {
+            margin-bottom: 1.3rem;
+            font-size: 1.1rem;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #4caf50;
+            min-width: 130px;
+            display: inline-block;
+        }
+
+        .detail-value {
+            color: #37474f;
+        }
+
+        a.btn-back {
+            display: inline-block;
+            margin-top: 2.5rem;
+            text-decoration: none;
+            color: #388e3c;
+            font-weight: 600;
+            border: 2px solid #388e3c;
+            padding: 0.5rem 1.3rem;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        a.btn-back:hover {
+            background-color: #388e3c;
+            color: white;
+            text-decoration: none;
+            box-shadow: 0 8px 20px rgba(56, 142, 60, 0.5);
+        }
+
+        a.pdf-link {
+            color: #1b5e20;
+            font-weight: 600;
+            text-decoration: underline;
+            transition: color 0.3s ease;
+        }
+
+        a.pdf-link:hover {
+            color: #4caf50;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .container {
+                padding: 2rem 1.5rem;
+            }
+
+            .detail-label {
+                min-width: 100px;
+                font-size: 1rem;
+            }
+
+            .detail-value {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" role="main">
+        <h2>Detalle de PQRS: {{ pqrs.numero_radicado }}</h2>
+
+        <div class="detail-row">
+            <span class="detail-label">Fecha:</span>
+            <span class="detail-value">{{ pqrs.fecha_radicado }}</span>
+        </div>
+
+        <div class="detail-row">
+            <span class="detail-label">Tipo:</span>
+            <span class="detail-value">{{ pqrs.get_tipo_display }}</span>
+        </div>
+
+        <div class="detail-row">
+            <span class="detail-label">Comentarios:</span>
+            <span class="detail-value">{{ pqrs.comentarios }}</span>
+        </div>
+
+        <div class="detail-row">
+            <span class="detail-label">Estado:</span>
+            <span class="detail-value">{{ pqrs.get_estado_display }}</span>
+        </div>
+
+        <div class="detail-row">
+            <span class="detail-label">Justificación:</span>
+            <span class="detail-value">{{ pqrs.justificacion|default:"-" }}</span>
+        </div>
+
+        <div class="detail-row">
+            <span class="detail-label">Archivo:</span>
+            <span class="detail-value">
+                {% if pqrs.archivo %}
+                    <a href="{{ pqrs.archivo.url }}" target="_blank" class="pdf-link" aria-label="Ver archivo PDF">Ver PDF 📄</a>
+                {% else %}
+                    Sin archivo
+                {% endif %}
+            </span>
+        </div>
+
+        <a href="{% url 'consultar_radicados' %}" class="btn-back" aria-label="Volver a la consulta">← Volver a la consulta</a>
+    </div>
+</body>
+</html>

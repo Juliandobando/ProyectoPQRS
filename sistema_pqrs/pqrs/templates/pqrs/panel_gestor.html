@@ -1,0 +1,262 @@
+ <!-- panel_gestor.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel del Gestor - PQRS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .top-bar {
+            background-color: #000;
+            color: white;
+            padding: 10px 30px;
+            font-size: 14px;
+        }
+
+        .top-bar a {
+            color: white;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+
+        header {
+            padding: 20px 30px;
+            background-color: white;
+        }
+
+        nav {
+            background-color: #e8e0d5;
+            padding: 10px 30px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: black;
+            font-weight: 500;
+        }
+
+        .hero {
+            background: url("{% static 'pqrs/img/banner2.jpg' %}") no-repeat center center;
+            background-size: cover;
+            min-height: 70vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 60px 100px;
+            color: #000;
+        }
+
+        .hero h2 {
+            font-size: 3rem;
+            font-weight: 800;
+        }
+
+        .btn-green {
+            background-color: #66bb6a;
+            border: none;
+            color: white;
+            font-weight: 500;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 1rem;
+            text-decoration: none;
+            margin-top: 20px;
+            display: inline-block;
+            max-width: fit-content;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .btn-green:hover {
+            background-color: #388e3c;
+        }
+
+        .seccion-tabla {
+            background-color: #f8f9fa;
+            padding: 60px 40px;
+        }
+
+        .table th, .table td {
+            vertical-align: middle;
+        }
+
+        .form-select, .btn {
+            font-weight: 500;
+            border-radius: 0px !important;
+        }
+
+        .separador {
+            border-top: 3px solid rgb(10, 77, 17);
+            margin-top: 50px;
+            margin-bottom: 30px;
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- Barra superior -->
+<div class="top-bar d-flex justify-content-between">
+    <div>Página web</div>
+    <div>
+        <a href="#">Acerca de</a>
+        <a href="#">Contacto</a>
+        Asistencia Llama +57-300 177 5294
+    </div>
+</div>
+
+<!-- Encabezado -->
+<header class="d-flex align-items-center">
+    <h1 class="m-0">Super Market</h1>
+</header>
+
+<!-- Menú -->
+<nav>
+    <div>
+        <a href="#"></a>
+        <a href="#"></a>
+    </div>
+    <div>
+        <a href="{% url 'logout_gestor' %}" class="text-danger">Cerrar Sesión</a>
+        
+    </div>
+</nav>
+
+<!-- Sección 1: Banner -->
+<section class="hero">
+    <h2>Panel del<br>Gestor</h2>
+    <a href="#tabla" class="btn-green">Filtrar radicados</a>
+</section>
+
+<!-- Sección 2: Filtros y Tabla -->
+<section class="seccion-tabla" id="tabla">
+
+    <div class="separador"></div>
+
+    <!-- Filtros -->
+    <form method="get" class="row g-3 mb-4">
+        <div class="col-md-4">
+            <select name="tipo" class="form-select">
+                <option value="">Todos los tipos</option>
+                <option value="P" {% if tipo_filtro == 'P' %}selected{% endif %}>Petición</option>
+                <option value="Q" {% if tipo_filtro == 'Q' %}selected{% endif %}>Queja</option>
+                <option value="R" {% if tipo_filtro == 'R' %}selected{% endif %}>Reclamo</option>
+                <option value="S" {% if tipo_filtro == 'S' %}selected{% endif %}>Sugerencia</option>
+            </select>
+        </div>
+        <div class="col-md-4">
+            <select name="estado" class="form-select">
+                <option value="">Todos los estados</option>
+                <option value="NUEVO" {% if estado_filtro == 'NUEVO' %}selected{% endif %}>Nuevo</option>
+                <option value="PROCESO" {% if estado_filtro == 'PROCESO' %}selected{% endif %}>En proceso</option>
+                <option value="RESUELTO" {% if estado_filtro == 'RESUELTO' %}selected{% endif %}>Resuelto</option>
+                <option value="RECHAZADO" {% if estado_filtro == 'RECHAZADO' %}selected{% endif %}>Rechazado</option>
+            </select>
+        </div>
+        <div class="col-md-2 d-grid">
+            <button type="submit" class="btn btn-success">Filtrar</button>
+        </div>
+        <div class="col-md-2 d-grid">
+            <a href="{% url 'generar_reporte_pdf' %}?tipo={{ tipo_filtro }}&estado={{ estado_filtro }}" class="btn btn-secondary">Generar PDF</a>
+        </div>
+    </form>
+
+    <!-- Tabla -->
+    <div class="card shadow-sm">
+        <div class="card-body p-0">
+            <table class="table table-striped mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Radicado</th>
+                        <th>Cliente</th>
+                        <th>Tipo</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for pqrs in radicados %}
+                        <tr>
+                            <td>{{ pqrs.numero_radicado }}</td>
+                            <td>{{ pqrs.cliente.nombre }}</td>
+                            <td>{{ pqrs.get_tipo_display }}</td>
+                            <td>{{ pqrs.get_estado_display }}</td>
+                            <td>
+                                <a href="{% url 'gestionar_pqrs' pqrs.numero_radicado %}" class="btn btn-sm btn-success">Gestionar</a>
+                                {% if pqrs.archivo %}
+                                    <a href="{% url 'descargar_anexo' pqrs.numero_radicado %}" class="btn btn-sm btn-outline-dark">PDF</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center text-muted py-4">No hay PQRS disponibles.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+
+<!-- Footer -->
+<footer class="bg-white py-5 mt-5 border-top">
+  <div class="container">
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+
+      <!-- Ubicación -->
+      <div>
+        <h5 class="fw-bold">Ubicación de tienda</h5>
+        <p class="mb-1">Av. Fray A. Alcalde 10</p>
+        <p class="mb-1">Bogotá D.C., Colombia</p>
+        <p class="mb-1">info@misitio.com</p>
+        <p class="mb-2">+57 3001775294</p>
+        <div class="d-flex gap-3">
+          <a href="#"><i class="fab fa-facebook fa-lg text-dark"></i></a>
+          <a href="#"><i class="fab fa-instagram fa-lg text-dark"></i></a>
+          <a href="#"><i class="fab fa-twitter fa-lg text-dark"></i></a>
+          <a href="#"><i class="fab fa-youtube fa-lg text-dark"></i></a>
+        </div>
+      </div>
+
+      <!-- Atención al cliente -->
+      <div>
+        <h5 class="fw-bold">Atención al cliente</h5>
+        <ul class="list-unstyled">
+          <li><a href="#" class="text-decoration-none text-dark">Contáctanos</a></li>
+          <li><a href="#" class="text-decoration-none text-dark">Asistencia</a></li>
+          <li><a href="#" class="text-decoration-none text-dark">Acerca de</a></li>
+        </ul>
+      </div>
+
+      <!-- Política -->
+      <div>
+        <h5 class="fw-bold">Política</h5>
+        <ul class="list-unstyled">
+          <li><a href="#" class="text-decoration-none text-dark">Términos y condiciones</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</footer>
+
+</html>
